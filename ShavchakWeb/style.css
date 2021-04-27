@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    color:;
+    text-align: center;
+}
+
+body {
+   background-color: #ccf7b5;
+}
+
+h1 {
+    color: teal;
+}
+
+.group-list {
+    background-color: blue;
+}

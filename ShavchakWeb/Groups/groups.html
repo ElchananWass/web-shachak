@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/./style.css" />
+    </head>
+    <body>
+        <h1>ניהול קבוצות וחיילים</h1>
+        
+        <div id="addsoldierbox">
+            <h3>הוסף חייל</h3>
+            <input type="text" id="nameofsoldier"/>
+            <label>שם החייל</label>
+            <br />
+            <label>1</label>
+            <input type="radio" name="pzm" value="1" checked/>
+            <input type="radio" name="pzm" value="2"/>
+            <input type="radio" name="pzm" value="3"/>
+            <input type="radio" name="pzm" value="4"/>
+            <input type="radio" name="pzm" value="5"/>
+            <input type="radio" name="pzm" value="6"/>
+            <input type="radio" name="pzm" value="7"/>
+            <label>7</label>
+            <label>פזם</label>
+            <br />
+            <label id="sldringroup"></label>
+            <label>בקבוצה </label>
+            <br />
+            <button id="addsoldier">הוסף</button>
+        </div>
+        
+        <div id="addgroupbox">
+            <h3>הוסף קבוצה</h3>
+            <input type="text" id="nameofgroup"/>
+            <label>שם הקבוצה</label>
+            <br />
+            <label id="grpingroup"></label>
+            <label>בקבוצה </label>
+            <br />
+            <button id="addgroup">הוסף</button>
+        </div>
+        <!--
+        <div id="boaz">
+            <button id="boazgrpadd">הוסף קבוצה</button>
+            <button id="boazsldradd">הוסף חייל</button>
+            <b>בועז</b>
+            <input type="checkbox"/>
+            <br />
+            <div id = "פלגה1">
+                ...
+            </div>
+        </div>
+        -->
+        <div id = "solela">
+        </div>
+        
+        <script src="groups.js"></script>
+    </body>
+</html>

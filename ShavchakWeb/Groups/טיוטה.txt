@@ -1,0 +1,40 @@
+name : {
+name : ""
+pzm : num
+}
+
+groupname : {
+(groupname : {})
+sldr : ["",...]
+parent : ""
+grps : ["",...]
+}
+
+soldiers {}
+groups {}
+
+
+
+soldiers = {
+name : {
+pzm :
+}
+name : {}...
+}
+
+
+
+group : {
+    groupname : {
+        name ""
+        sldr []
+        parent : ""
+        grps []
+        }
+    groupname : {
+        name ""
+        sldr []
+        parent : ""
+        grps []
+        }
+    }

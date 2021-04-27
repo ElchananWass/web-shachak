@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+    </head>
+    <body>
+        <h1>ניהול טבלאות ופורמטים</h1>
+        <div>
+            <div>
+                <input type="text" id="name-of-stand"/>
+                <label>שם העמדה</label>
+                <input type="text" id="num-of-guards"/>
+                <label>מספר אנשים</label>
+                <button id="add-stand">הוסף עמדה</button>
+            </div>
+            <div id="create-table-div">
+                <label>מספר נגלות</label>
+                <input type="text" id="num-of-steps"/>
+                <br />
+                <label>אורך שמירה מינמלי</label>
+                <input type="text" id="time-of-step"/>
+                <br />
+                <label>שעת התחלה</label>
+                <input type="text" id="begining-time"/>
+                <br />
+                <button id="create-table">צור טבלה חדשה</button>
+            </div>
+            <table border = "1" border-collapse = "collapse">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+            <div>
+                <input type="text" id="num-of-naglot" value="1"/>
+                <label>כמה נגלות תופס</label>
+                <button id="create-smira">צור שמירה</button>
+            </div>
+        </div>
+        <script src="formats.js"></script>
+    </body>
+</html>
