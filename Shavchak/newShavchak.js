@@ -26,6 +26,19 @@ document.getElementById("continue-shavchak").onclick = RevealShavchakSetting;
 
 document.getElementById("create-new-nagla").onclick = RevealShavchakSetting;
 
+document.getElementById("add-stand-bttn").onclick = AddStand;
+
+function AddStand() {
+  standName = document.getElementById("add-stand-name").value;
+  standDiv = document.createElement("div");
+  standDiv.setAttribute("id",standName)
+  delBttn = document.createElement("button");
+  delBttn.innerHTML = "מחק";
+  standDiv.appendChild(delBttn);
+  standDiv.appendChild(document.createTextNode(standName));
+  document.getElementById("stands-div").appendChild(standDiv);
+}
+
 function RevealShavchakSetting() {
   if (document.getElementById("create-nagla").style.display == "block") {
     document.getElementById("create-nagla").style.display = "none";
