@@ -1,33 +1,45 @@
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="../style.css" />
-    </head>
-    <body>
-        <h1>הגדרות לשבצק</h1>
-        <form action="" method="get" accept-charset="utf-8">
-            <div>
-            <label for="">קבוצות זמינות</label>
-            <br />
-            <select name="" id=""> </select>
-            <input type="button" name="" id="" value="הוסף" />
-            </div>
-            <div>
-            <label for="">פורמט טבלה</label>
-            <br />
-            <select name="" id=""> </select>
-            <input type="button" name="" id="" value="הוסף" />
-            </div>
-            <div>
-                <label for="יחסי פזם">יחסי פזם</label>
-            </div>
-            <div>
-                <label for="אפשרויות נוספות">אפשרויות נוספות</label>
-            </div>
-            <input type="submit" name="" id="" value="צור" />
-        </form>
-        <script src="newShavchak.js" type="text/javascript" charset="utf-8"></script>
-    </body>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="../style.css" />
+</head>
+
+<body>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>sg</th>
+        <th>bonker</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>יובל</td>
+        <td>ron</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button>שבצק חדש</button>
+    <button id="continue-shavchak">המשך שבצק</button>
+  </div>
+  <div id="create-nagla" style="display: none">
+    <h3>נגלה חדשה</h3>
+    <div>
+    <input type="time" id="" />
+    <label>התחלת השמירה</label>
+    <br />
+    <input type="time" id="" />
+    <label>סוף השמירה</label>
+    </div>
+    <div>
+      
+    </div>
+    <button id="create-new-nagla">צור</button>
+  </div>
+  <script src="newShavchak.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
 </html>

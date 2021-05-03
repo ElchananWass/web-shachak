@@ -1,0 +1,16 @@
+nagla = {
+  naglanum : {thread:0,num:0},
+  prevNagla : {thread:0,num:0},
+  mutable: "bool",
+  start: "#date object",
+  end : "#date object",
+  stands : [],
+  soldiersAval : [],
+  fillsetting : {
+    pzm : [],
+    //...
+  },
+};
+
+naglasthread = []; // list of list
+threadednaglas = []; //list of objects

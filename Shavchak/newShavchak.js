@@ -1,10 +1,38 @@
-cycles = {
-}
-
+cycles = {}
 for (i = 1; i <= 7; i++) {
   name = "pzm_" + i.toString();
   cycles[name] = [];
   //alert(cycles[name]);
+}
+
+nagla = {
+  naglanum: { thread: 0, num: 0 },
+  prevNagla: { thread: 0, num: 0 },
+  mutable: "bool",
+  start: "#date object",
+  end: "#date object",
+  stands: [],
+  soldiersAval: [],
+  fillsetting: {
+    pzm: [],
+    //...
+  },
+};
+
+naglasthread = []; // list of list
+threadednaglas = []; //list of objects
+
+document.getElementById("continue-shavchak").onclick = RevealShavchakSetting;
+
+document.getElementById("create-new-nagla").onclick = RevealShavchakSetting;
+
+function RevealShavchakSetting() {
+  if (document.getElementById("create-nagla").style.display == "block") {
+    document.getElementById("create-nagla").style.display = "none";
+  }
+  else {
+    document.getElementById("create-nagla").style.display = "block";
+  }
 }
 
 function* CyclesItirate(i) {
@@ -22,7 +50,7 @@ const currentCycle = CyclesItirate(0);
 function SoldiersForNagla(naglaNum) {
   // returns soldiers from the cycles
   // returns a nagla list
-  
+
   // draws n soldiers with cycle
   //"sort them by goodness" and return
 }
