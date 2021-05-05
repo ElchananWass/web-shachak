@@ -21,9 +21,6 @@ document.getElementById("addsoldierbox").style.display = "none";
 document.getElementById("addsoldier").onclick = AddSoldier;
 document.getElementById("addgroup").onclick = AddGroup;
 
-document.getElementById("boazsldradd").onclick = RevealAddSoldier;
-document.getElementById("boazgrpadd").onclick = RevealAddGroup;
-
 function Checking() {
     parent = this.parentElement.id;
     parentdiv = document.getElementById(parent);

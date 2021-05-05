@@ -27,11 +27,11 @@
   </div>
   <div id="create-nagla" style="display: none">
     <h3>נגלה חדשה</h3>
-    <div>
-      <input type="time" id="" />
+    <div id="stand-time-div">
+      <input type="datetime-local" id="" />
       <label>התחלת השמירה</label>
       <br />
-      <input type="time" id="" />
+      <input type="datetime-local" id="" />
       <label>סוף השמירה</label>
     </div>
     <div id="add-stand-div">
@@ -40,10 +40,47 @@
       <input type="text" id="add-stand-name" />
       <label>שם עמדה</label>
       <br />
+      <input type="number" />
+      <label>מספר אנשים בעמדה</label>
+      <br />
       <input type="number" id="add-stand-span" />
       <label>שמירה כפול</label>
       <br />
       <button id="add-stand-bttn">הוסף עמדה</button>
+    </div>
+    <div id="control-groups-div">
+      <div id="solela">
+      </div>
+      <div id="add-soldier-div">
+        <input type="text" id="soldier-name" />
+        <label>שם החייל</label>
+        <br />
+        <label>1</label>
+        <input type="radio" name="pzm" value="1" checked />
+        <input type="radio" name="pzm" value="2" />
+        <input type="radio" name="pzm" value="3" />
+        <input type="radio" name="pzm" value="4" />
+        <input type="radio" name="pzm" value="5" />
+        <input type="radio" name="pzm" value="6" />
+        <input type="radio" name="pzm" value="7" />
+        <label>7</label>
+        <label>פזם</label>
+        <br />
+        <label id="soldier-in-group"></label>
+        <label>בקבוצה </label>
+        <br />
+        <button id="add-soldier-bttn">הוסף</button>
+      </div>
+      <div id="add-group-div">
+        <h3>הוסף קבוצה</h3>
+        <input type="text" id="group-name" />
+        <label>שם הקבוצה</label>
+        <br />
+        <label id="group-in-group"></label>
+        <label>בקבוצה </label>
+        <br />
+        <button id="add-group-bttn">הוסף</button>
+      </div>
     </div>
     <button id="create-new-nagla">צור</button>
   </div>
