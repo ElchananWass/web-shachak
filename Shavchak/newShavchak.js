@@ -5,6 +5,7 @@ for (i = 1; i <= 7; i++) {
   //alert(cycles[name]);
 }
 
+// an example of how it should be
 nagla = {
   naglaId: { thread: 0, num: 0 },
   prevNagla: { thread: 0, num: 0 },
@@ -48,22 +49,40 @@ function RevealShavchakSetting() {
   }
 }
 
-function AddStand() {
-  standName = document.getElementById("add-stand-name").value;
+// ====== stands setting part ======
+
+// return the current setting for the new stand from the ui div
+function StandsSettingValues() {
+  values = {
+    name: document.getElementById("add-stand-name").value,
+    capacity: document.getElementById("add-stand-capacity").value,
+    span: document.getElementById("add-stand-span").value,
+  };
   document.getElementById("add-stand-name").value = "";
+  document.getElementById("add-stand-capacity").value = "";
+  document.getElementById("add-stand-span").value = "";
+  return values;
+}
+
+// create a stand ui and data
+function AddStand() {
+  standValues = StandsSettingValues();
   standDiv = document.createElement("div");
-  standDiv.setAttribute("id", standName)
+  standDiv.setAttribute("id", standValues.name)
   delBttn = document.createElement("button");
   delBttn.onclick = DeleteStand;
   delBttn.innerHTML = "מחק";
   standDiv.appendChild(delBttn);
-  standDiv.appendChild(document.createTextNode(standName));
+  standDiv.appendChild(document.createTextNode(standValues.name));
   document.getElementById("stands-div").appendChild(standDiv);
 }
 
+// delete stand ui and data
 function DeleteStand() {
   this.parentElement.remove();
 }
+
+// ====== soldiers setting part ======
 
 CreateGroupDiv("solela", "boaz");
 
@@ -191,6 +210,9 @@ function CreateSoldierDiv(parent, temp) {
 
   document.getElementById(parent).appendChild(tempdiv);
 }
+
+
+// ====== pazam setting part ======
 
 function* CyclesItirate(i) {
   // get the יחסים from page 
