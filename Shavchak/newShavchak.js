@@ -12,7 +12,7 @@ nagla = {
   mutable: "bool",
   start: "#date object",
   end: "#date object",
-  stands: [], //list of objects
+  stands: {}, //list of objects
   soldiersAval: [],
   fillsetting: {
     pzm: [],
@@ -23,8 +23,8 @@ nagla = {
 soldiers = {};
 
 groups = {
-  boaz: {
-    name: "boaz",
+  בועז: {
+    name: "בועז",
     soldiers: [],
     parentgroup: "solela",
     subgroups: []
@@ -38,8 +38,6 @@ document.getElementById("continue-shavchak").onclick = RevealShavchakSetting;
 
 document.getElementById("create-new-nagla").onclick = RevealShavchakSetting;
 
-document.getElementById("add-stand-bttn").onclick = AddStand;
-
 function RevealShavchakSetting() {
   if (document.getElementById("create-nagla").style.display == "block") {
     document.getElementById("create-nagla").style.display = "none";
@@ -50,6 +48,8 @@ function RevealShavchakSetting() {
 }
 
 // ====== stands setting part ======
+
+document.getElementById("add-stand-bttn").onclick = AddStand;
 
 // return the current setting for the new stand from the ui div
 function StandsSettingValues() {
@@ -84,7 +84,8 @@ function DeleteStand() {
 
 // ====== soldiers setting part ======
 
-CreateGroupDiv("solela", "boaz");
+//create the first ui div from which you add other groups/soldiers
+CreateGroupDiv("solela", "בועז");
 
 document.getElementById("add-group-div").style.display = "none";
 document.getElementById("add-soldier-div").style.display = "none";
@@ -92,6 +93,7 @@ document.getElementById("add-soldier-div").style.display = "none";
 document.getElementById("add-soldier-bttn").onclick = AddSoldier;
 document.getElementById("add-group-bttn").onclick = AddGroup;
 
+//toggle the ui div visability for everything below it
 function Checking() {
   parent = this.parentElement.id;
   parentdiv = document.getElementById(parent);
@@ -101,12 +103,14 @@ function Checking() {
     CreateDivTree(parent);
   }
   if (!this.checked) {
+    //TODO change it so it keeps the place for the divs
     grandpa = groups[parent].parentgroup;
     parentdiv.remove();
     CreateGroupDiv(grandpa, parent);
   }
 }
 
+//reveal the ui div which creates new soldier
 function RevealAddSoldier() {
   lbl = document.getElementById("soldier-in-group");
   sldringrp = this.parentElement.id;
@@ -116,6 +120,7 @@ function RevealAddSoldier() {
   document.getElementById("add-soldier-div").style.display = "block";
 }
 
+//reveal the ui div which creates new group
 function RevealAddGroup() {
   lbl = document.getElementById("group-in-group");
   groupingroup = this.parentElement.id;
@@ -125,6 +130,7 @@ function RevealAddGroup() {
   //lbl.setAttribute("for",group-in-group);
 }
 
+//set the data of the new/old soldier in the json
 function AddSoldier() {
   sldrname = document.getElementById("soldier-name").value;
   radios = document.getElementsByName("pzm");
@@ -143,6 +149,7 @@ function AddSoldier() {
   document.getElementById("add-soldier-div").style.display = "none";
 }
 
+//set the data of the new group in the json
 function AddGroup() {
   //alert("hello");
   grpname = document.getElementById("group-name").value;
@@ -158,6 +165,8 @@ function AddGroup() {
   document.getElementById("add-group-div").style.display = "none";
 }
 
+//create the ui of the soldiers and groups
+//only create divs for one level below
 function CreateDivTree(temp) {
   //alert(temp);
   tempsubgrps = groups[temp].subgroups;
@@ -173,6 +182,7 @@ function CreateDivTree(temp) {
 
 }
 
+//create the ui div for a group card and its elements
 function CreateGroupDiv(parent, temp) {
   tempdiv = document.createElement("div");
   tempdiv.setAttribute("class", "group-card");
@@ -197,6 +207,7 @@ function CreateGroupDiv(parent, temp) {
   document.getElementById(parent).appendChild(tempdiv);
 }
 
+//create the ui div for a soldiers card and its elements
 function CreateSoldierDiv(parent, temp) {
   tempdiv = document.createElement("div");
   tempdiv.setAttribute("id", temp);
