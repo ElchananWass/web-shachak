@@ -13,7 +13,7 @@ nagla = {
   start: "#date object",
   end: "#date object",
   stands: [], //list of objects
-  soldiersAval: [],
+  soldiersAvail: [],
   fillsetting: {
     pzm: [],
     //...
@@ -82,8 +82,8 @@ function AddStandUi() {
 function DeleteStand() {
   name = this.parentElement.id;
   for (i = 0; i < nagla.stands.length; i++) {
-    if (nagla.stands[i].name == name){
-      nagla.stands.splice(i,1);
+    if (nagla.stands[i].name == name) {
+      nagla.stands.splice(i, 1);
     }
   }
   this.parentElement.remove();
@@ -127,19 +127,39 @@ function Checking() {
 function RevealAddSoldier() {
   lbl = document.getElementById("soldier-in-group");
   sldringrp = this.parentElement.id;
+  same = false;
+  if (sldringrp == lbl.innerHTML) {
+    same = true;
+  }
   lbl.innerHTML = sldringrp;
   //lbl.setAttribute("for",sldringrp);
   document.getElementById("soldier-name").value = "";
-  document.getElementById("add-soldier-div").style.display = "block";
+  if (document.getElementById("add-soldier-div").style.display == "none") {
+    document.getElementById("add-soldier-div").style.display = "block";
+    document.getElementById("add-group-div").style.display = "none";
+  }
+  else if (same) {
+    document.getElementById("add-soldier-div").style.display = "none";
+  }
 }
 
 //reveal the ui div which creates new group
 function RevealAddGroup() {
   lbl = document.getElementById("group-in-group");
   groupingroup = this.parentElement.id;
+  same = false;
+  if (groupingroup == lbl.innerHTML) {
+    same = true;
+  }
   lbl.innerHTML = groupingroup;
   document.getElementById("group-name").value = "";
-  document.getElementById("add-group-div").style.display = "block";
+  if (document.getElementById("add-group-div").style.display == "none") {
+    document.getElementById("add-group-div").style.display = "block";
+    document.getElementById("add-soldier-div").style.display = "none";
+  }
+  else if (same) {
+    document.getElementById("add-group-div").style.display = "none";
+  }
   //lbl.setAttribute("for",group-in-group);
 }
 
@@ -232,6 +252,9 @@ function CreateSoldierDiv(parent, temp) {
   avail.setAttribute("type", "checkbox");
   avail.setAttribute("id", temp + "checkbox");
   avail.onchange = MakeAvail;
+  if (nagla.soldiersAvail.includes(temp)) {
+    avail.checked = true;
+  }
 
   tempdiv.appendChild(delbtn);
   tempdiv.appendChild(txt);
@@ -239,9 +262,24 @@ function CreateSoldierDiv(parent, temp) {
 
   document.getElementById(parent).appendChild(tempdiv);
 }
-
+// this binds the checking ui of soldiers
+// to the data in nagla list of avails
 function MakeAvail() {
-  // body...
+  name = this.parentElement.id;
+  isAvail = false;
+  indexOf = -1;
+  for (i = 0; i < nagla.soldiersAvail.length; i++) {
+    if (nagla.soldiersAvail[i] == name) {
+      isAvail = true;
+      indexOf = i;
+    }
+  }
+  if (this.checked && !isAvail) {
+    nagla.soldiersAvail.push(name);
+  }
+  if (!this.checked && isAvail && indexOf != -1) {
+    nagla.soldiersAvail.splice(indexOf, 1);
+  }
 }
 
 // ====== pazam setting part ======
