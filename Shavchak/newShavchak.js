@@ -12,7 +12,7 @@ nagla = {
   mutable: "bool",
   start: "#date object",
   end: "#date object",
-  stands: {}, //list of objects
+  stands: [], //list of objects
   soldiersAval: [],
   fillsetting: {
     pzm: [],
@@ -36,7 +36,7 @@ threadedNaglas = []; //list of objects
 
 document.getElementById("continue-shavchak").onclick = RevealShavchakSetting;
 
-document.getElementById("create-new-nagla").onclick = RevealShavchakSetting;
+document.getElementById("create-next-nagla").onclick = RevealShavchakSetting;
 
 function RevealShavchakSetting() {
   if (document.getElementById("create-nagla").style.display == "block") {
@@ -49,7 +49,7 @@ function RevealShavchakSetting() {
 
 // ====== stands setting part ======
 
-document.getElementById("add-stand-bttn").onclick = AddStand;
+document.getElementById("add-stand-bttn").onclick = AddStandUi;
 
 // return the current setting for the new stand from the ui div
 function StandsSettingValues() {
@@ -65,7 +65,7 @@ function StandsSettingValues() {
 }
 
 // create a stand ui and data
-function AddStand() {
+function AddStandUi() {
   standValues = StandsSettingValues();
   standDiv = document.createElement("div");
   standDiv.setAttribute("id", standValues.name)
@@ -75,11 +75,24 @@ function AddStand() {
   standDiv.appendChild(delBttn);
   standDiv.appendChild(document.createTextNode(standValues.name));
   document.getElementById("stands-div").appendChild(standDiv);
+  AddStandData(standValues);
 }
 
 // delete stand ui and data
 function DeleteStand() {
+  name = this.parentElement.id;
+  for (i = 0; i < nagla.stands.length; i++) {
+    if (nagla.stands[i].name == name){
+      nagla.stands.splice(i,1);
+    }
+  }
   this.parentElement.remove();
+}
+
+// add the stand values to the json data
+function AddStandData(standValues) {
+  nagla.stands.push(standValues);
+  //console.log(nagla.stands);
 }
 
 // ====== soldiers setting part ======
@@ -215,13 +228,21 @@ function CreateSoldierDiv(parent, temp) {
   delbtn = document.createElement("button");
   delbtn.innerHTML = "del";
   txt = document.createTextNode(temp);
+  avail = document.createElement("input");
+  avail.setAttribute("type", "checkbox");
+  avail.setAttribute("id", temp + "checkbox");
+  avail.onchange = MakeAvail;
 
   tempdiv.appendChild(delbtn);
   tempdiv.appendChild(txt);
+  tempdiv.appendChild(avail);
 
   document.getElementById(parent).appendChild(tempdiv);
 }
 
+function MakeAvail() {
+  // body...
+}
 
 // ====== pazam setting part ======
 
@@ -252,4 +273,15 @@ function OrderNagla() {
 function PushBackFoward() {
   // a little problamatic but soppuose to change between hours
   // alot of if else for conditions...
+}
+
+// ====== creating next nagla part ======
+
+document.getElementById("create-next-nagla").onclick = CreateNextNagla;
+
+function CreateNextNagla() {
+  timeStart = document.getElementById("nagla-start-time").value;
+  timeEnd = document.getElementById("nagla-end-time").value;
+  nagla.start = timeStart;
+  nagla.end = timeEnd;
 }
