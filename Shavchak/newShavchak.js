@@ -10,8 +10,11 @@ nagla = {
   naglaId: { thread: 0, num: 0 },
   prevNagla: { thread: 0, num: 0 },
   mutable: "bool",
-  start: "#date object",
-  end: "#date object",
+  time: {
+    duratio: "",
+    end: "",
+    duration: "",
+  },
   stands: [], //list of objects
   soldiersAvail: [],
   fillsetting: {
@@ -19,6 +22,8 @@ nagla = {
     //...
   },
 };
+
+tempAvail = [];
 
 soldiers = {};
 
@@ -252,7 +257,7 @@ function CreateSoldierDiv(parent, temp) {
   avail.setAttribute("type", "checkbox");
   avail.setAttribute("id", temp + "checkbox");
   avail.onchange = MakeAvail;
-  if (nagla.soldiersAvail.includes(temp)) {
+  if (tempAvail.includes(temp)) {
     avail.checked = true;
   }
 
@@ -268,17 +273,17 @@ function MakeAvail() {
   name = this.parentElement.id;
   isAvail = false;
   indexOf = -1;
-  for (i = 0; i < nagla.soldiersAvail.length; i++) {
-    if (nagla.soldiersAvail[i] == name) {
+  for (i = 0; i < tempAvail.length; i++) {
+    if (tempAvail[i] == name) {
       isAvail = true;
       indexOf = i;
     }
   }
   if (this.checked && !isAvail) {
-    nagla.soldiersAvail.push(name);
+    tempAvail.push(name);
   }
   if (!this.checked && isAvail && indexOf != -1) {
-    nagla.soldiersAvail.splice(indexOf, 1);
+    tempAvail.splice(indexOf, 1);
   }
 }
 
@@ -317,9 +322,39 @@ function PushBackFoward() {
 
 document.getElementById("create-next-nagla").onclick = CreateNextNagla;
 
-function CreateNextNagla() {
+function GetNaglaTimeObject() {
+  date = document.getElementById("nagla-date").value;
   timeStart = document.getElementById("nagla-start-time").value;
-  timeEnd = document.getElementById("nagla-end-time").value;
-  nagla.start = timeStart;
-  nagla.end = timeEnd;
+  timeDuration = document.getElementById("nagla-duration-time").value;
+  naglaStart = new Date(date + "T00:00+02:00")
+  //naglaEnd = new Date(naglaStart + )
+  naglaStart.setHours(parseInt(timeStart.slice(0, 2)));
+  naglaStart.setMinutes(parseInt(timeStart.slice(3, 5)));
+  return{
+    duration: timeDuration,
+    start: naglaStart,
+    naglaEnd: new Date(naglaStart.getTime() + parseInt(timeDuration * 60 * 60000)),
+  }
+}
+
+function CreateNextNagla() {
+  /*nagla = {
+  naglaId: { thread: 0, num: 0 },
+  prevNagla: { thread: 0, num: 0 },
+  mutable: "bool",
+  time: {
+    duratio: "",
+    end: "",
+    duration: "",
+  },
+  stands: [], //list of objects
+  soldiersAvail: [],
+  fillsetting: {
+    pzm: [],
+    //...
+  },
+};
+*/
+  time = GetNaglaTimeObject();
+
 }

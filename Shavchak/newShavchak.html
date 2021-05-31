@@ -28,11 +28,14 @@
   <div id="create-nagla" style="display: none">
     <h3>נגלה חדשה</h3>
     <div id="stand-time-div">
-      <input type="datetime-local" id="nagla-start-time" />
+      <input type="date" id="nagla-date"/>
+      <label>תאריך התחלת השמירה</label>
+      <br />
+      <input type="time" id="nagla-start-time" />
       <label>התחלת השמירה</label>
       <br />
-      <input type="datetime-local" id="nagla-end-time" />
-      <label>סוף השמירה</label>
+      <input type="number" id="nagla-duration-time" />
+      <label>משך השמירה בשעות</label>
     </div>
     <hr />
     <div id="add-stand-div">
