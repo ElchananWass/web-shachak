@@ -26,7 +26,7 @@ for (i = 1; i <= 7; i++) {
 tempCurrentNagla = {
   tempAvail: [],
   tempStands: [],
-  time: {},
+  tempTime: {},
 }
 soldiers = {};
 
@@ -55,6 +55,10 @@ function RevealShavchakSetting() {
   }
 }
 
+function FillFromPrevious(arg) {
+  // body...
+}
+
 // ====== time setting part ======
 
 document.getElementById("nagla-date").onchange = SetNaglaTimeObject;
@@ -69,10 +73,10 @@ function SetNaglaTimeObject() {
   //naglaEnd = new Date(naglaStart + )
   naglaStart.setHours(parseInt(timeStart.slice(0, 2)));
   naglaStart.setMinutes(parseInt(timeStart.slice(3, 5)));
-  tempCurrentNagla.time = {
+  tempCurrentNagla.tempTime = {
     duration: timeDuration,
     start: naglaStart,
-    naglaEnd: new Date(naglaStart.getTime() + parseInt(timeDuration * 60 * 60000)),
+    end: new Date(naglaStart.getTime() + parseInt(timeDuration * 60 * 60000)),
   };
 }
 
@@ -352,31 +356,32 @@ function PushBackFoward() {
 document.getElementById("create-next-nagla").onclick = CreateNextNagla;
 
 function CreateNextNagla() {
-  /*nagla = {
-  naglaId: { thread: 0, num: 0 },
-  prevNagla: { thread: 0, num: 0 },
-  mutable: "bool",
-  time: {
-    duratio: "",
-    end: "",
-    duration: "",
-  },
-  stands: [], //list of objects
-  soldiersAvail: [],
-  fillsetting: {
-    pzm: [],
-    //...
-  },
-};
-*/
-  CreateNewTableLine(tempCurrentNagla.tempStands,tempCurrentNagla.tempAvail);
+  mutable = false;
+  now = new Date();
+  if (tempCurrentNagla.tempTime.start.getTime() > now.getTime()){
+    mutable = true;
+  }
+  nagla = {
+    naglaId: { thread: 0, num: 0 },
+    prevNagla: { thread: 0, num: 0 },
+    mutable: mutable,
+    time: tempCurrentNagla.tempTime,
+    stands: tempCurrentNagla.tempStands,
+    soldiersAvail: tempCurrentNagla.tempAvail,
+    fillsetting: {
+      pzm: [],
+      //...
+    },
+  };
+
+  CreateNewTableLine(tempCurrentNagla.tempStands, tempCurrentNagla.tempAvail);
 }
 
-function CreateNewTableLine(stands,soldiers) {
+function CreateNewTableLine(stands, soldiers) {
   naglaDiv = document.createElement("div");
   document.getElementById("tables-div").appendChild(naglaDiv);
   table = document.createElement("table");
-  table.setAttribute("border","1")
+  table.setAttribute("border", "1")
   naglaDiv.appendChild(table);
   thead = document.createElement("thead");
   table.appendChild(thead);
