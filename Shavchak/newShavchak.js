@@ -6,7 +6,7 @@ for (i = 1; i <= 7; i++) {
 }
 
 // an example of how it should be
-nagla = {
+/*nagla = {
   naglaId: { thread: 0, num: 0 },
   prevNagla: { thread: 0, num: 0 },
   mutable: "bool",
@@ -21,10 +21,13 @@ nagla = {
     pzm: [],
     //...
   },
-};
+};*/
 
-tempAvail = [];
-
+tempCurrentNagla = {
+  tempAvail: [],
+  tempStands: [],
+  time: {},
+}
 soldiers = {};
 
 groups = {
@@ -52,9 +55,30 @@ function RevealShavchakSetting() {
   }
 }
 
+// ====== time setting part ======
+
+document.getElementById("nagla-date").onchange = SetNaglaTimeObject;
+document.getElementById("nagla-start-time").onchange = SetNaglaTimeObject;
+document.getElementById("nagla-duration-time").onchange = SetNaglaTimeObject;
+
+function SetNaglaTimeObject() {
+  date = document.getElementById("nagla-date").value;
+  timeStart = document.getElementById("nagla-start-time").value;
+  timeDuration = document.getElementById("nagla-duration-time").value;
+  naglaStart = new Date(date + "T00:00+02:00")
+  //naglaEnd = new Date(naglaStart + )
+  naglaStart.setHours(parseInt(timeStart.slice(0, 2)));
+  naglaStart.setMinutes(parseInt(timeStart.slice(3, 5)));
+  tempCurrentNagla.time = {
+    duration: timeDuration,
+    start: naglaStart,
+    naglaEnd: new Date(naglaStart.getTime() + parseInt(timeDuration * 60 * 60000)),
+  };
+}
+
 // ====== stands setting part ======
 
-document.getElementById("add-stand-bttn").onclick = AddStandUi;
+document.getElementById("add-stand-bttn").onclick = CreateNewStandFromValues;
 
 // return the current setting for the new stand from the ui div
 function StandsSettingValues() {
@@ -69,9 +93,15 @@ function StandsSettingValues() {
   return values;
 }
 
-// create a stand ui and data
-function AddStandUi() {
+// entry point for creating ui and data for stand drom the ui
+function CreateNewStandFromValues() {
   standValues = StandsSettingValues();
+  AddStandUi(standValues);
+  AddStandData(standValues);
+}
+
+// create a stand ui and data
+function AddStandUi(standValues) {
   standDiv = document.createElement("div");
   standDiv.setAttribute("id", standValues.name)
   delBttn = document.createElement("button");
@@ -80,15 +110,14 @@ function AddStandUi() {
   standDiv.appendChild(delBttn);
   standDiv.appendChild(document.createTextNode(standValues.name));
   document.getElementById("stands-div").appendChild(standDiv);
-  AddStandData(standValues);
 }
 
 // delete stand ui and data
 function DeleteStand() {
   name = this.parentElement.id;
-  for (i = 0; i < nagla.stands.length; i++) {
-    if (nagla.stands[i].name == name) {
-      nagla.stands.splice(i, 1);
+  for (i = 0; i < tempCurrentNagla.tempStands.length; i++) {
+    if (tempCurrentNagla.tempStands[i].name == name) {
+      tempCurrentNagla.tempStands.splice(i, 1);
     }
   }
   this.parentElement.remove();
@@ -96,7 +125,7 @@ function DeleteStand() {
 
 // add the stand values to the json data
 function AddStandData(standValues) {
-  nagla.stands.push(standValues);
+  tempCurrentNagla.tempStands.push(standValues);
   //console.log(nagla.stands);
 }
 
@@ -257,7 +286,7 @@ function CreateSoldierDiv(parent, temp) {
   avail.setAttribute("type", "checkbox");
   avail.setAttribute("id", temp + "checkbox");
   avail.onchange = MakeAvail;
-  if (tempAvail.includes(temp)) {
+  if (tempCurrentNagla.tempAvail.includes(temp)) {
     avail.checked = true;
   }
 
@@ -273,17 +302,17 @@ function MakeAvail() {
   name = this.parentElement.id;
   isAvail = false;
   indexOf = -1;
-  for (i = 0; i < tempAvail.length; i++) {
-    if (tempAvail[i] == name) {
+  for (i = 0; i < tempCurrentNagla.tempAvail.length; i++) {
+    if (tempCurrentNagla.tempAvail[i] == name) {
       isAvail = true;
       indexOf = i;
     }
   }
   if (this.checked && !isAvail) {
-    tempAvail.push(name);
+    tempCurrentNagla.tempAvail.push(name);
   }
   if (!this.checked && isAvail && indexOf != -1) {
-    tempAvail.splice(indexOf, 1);
+    tempCurrentNagla.tempAvail.splice(indexOf, 1);
   }
 }
 
@@ -322,21 +351,6 @@ function PushBackFoward() {
 
 document.getElementById("create-next-nagla").onclick = CreateNextNagla;
 
-function GetNaglaTimeObject() {
-  date = document.getElementById("nagla-date").value;
-  timeStart = document.getElementById("nagla-start-time").value;
-  timeDuration = document.getElementById("nagla-duration-time").value;
-  naglaStart = new Date(date + "T00:00+02:00")
-  //naglaEnd = new Date(naglaStart + )
-  naglaStart.setHours(parseInt(timeStart.slice(0, 2)));
-  naglaStart.setMinutes(parseInt(timeStart.slice(3, 5)));
-  return{
-    duration: timeDuration,
-    start: naglaStart,
-    naglaEnd: new Date(naglaStart.getTime() + parseInt(timeDuration * 60 * 60000)),
-  }
-}
-
 function CreateNextNagla() {
   /*nagla = {
   naglaId: { thread: 0, num: 0 },
@@ -355,6 +369,31 @@ function CreateNextNagla() {
   },
 };
 */
-  time = GetNaglaTimeObject();
+  CreateNewTableLine(tempCurrentNagla.tempStands,tempCurrentNagla.tempAvail);
+}
 
+function CreateNewTableLine(stands,soldiers) {
+  naglaDiv = document.createElement("div");
+  document.getElementById("tables-div").appendChild(naglaDiv);
+  table = document.createElement("table");
+  table.setAttribute("border","1")
+  naglaDiv.appendChild(table);
+  thead = document.createElement("thead");
+  table.appendChild(thead);
+  tbody = document.createElement("tbody");
+  table.appendChild(tbody)
+  hRow = document.createElement("tr");
+  for (var i = 0; i < stands.length; i++) {
+    th = document.createElement("th");
+    th.innerHTML = stands[i].name;
+    hRow.appendChild(th);
+  }
+  thead.appendChild(hRow);
+  dRow = document.createElement("tr");
+  for (var i = 0; i < soldiers.length; i++) {
+    td = document.createElement("td");
+    td.innerHTML = soldiers[i];
+    dRow.appendChild(td);
+  }
+  tbody.appendChild(dRow);
 }
