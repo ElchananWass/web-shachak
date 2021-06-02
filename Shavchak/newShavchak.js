@@ -149,15 +149,12 @@ function Checking() {
   parent = this.parentElement.id;
   parentdiv = document.getElementById(parent);
   if (this.checked) {
-
-    //parentdiv.remove();
     CreateDivTree(parent);
   }
   if (!this.checked) {
-    //TODO change it so it keeps the place for the divs
-    grandpa = groups[parent].parentgroup;
-    parentdiv.remove();
-    CreateGroupDiv(grandpa, parent);
+    while (parentdiv.lastChild.nodeName == "DIV") {
+      parentdiv.removeChild(parentdiv.lastChild);
+    }
   }
 }
 
@@ -201,10 +198,12 @@ function RevealAddGroup() {
   //lbl.setAttribute("for",group-in-group);
 }
 
-//set the data of the new/old soldier in the json
+//set the data of the new/old soldier in the json of the groups not the soldiers json
 function AddSoldier() {
   sldrname = document.getElementById("soldier-name").value;
-  radios = document.getElementsByName("pzm");
+  // i want to separete the definning of soldiers vs them in the groups
+  // TODO create form for creating soldiera atrributes
+  /*radios = document.getElementsByName("pzm");
   for (i = 0; i < radios.length; i++) {
     if (radios[i].checked) {
       pzmof = radios[i].value;
@@ -213,11 +212,16 @@ function AddSoldier() {
   soldiers[sldrname] = {
     name: sldrname,
     pzm: pzmof
-  };
+  };*/
   parentgrp = document.getElementById("soldier-in-group").innerText;
   groups[parentgrp].soldiers.push(sldrname);
   //alert(soldiers[sldrname].name + soldiers[sldrname].pzm);
   document.getElementById("add-soldier-div").style.display = "none";
+}
+
+function RemoveSoldier() {
+  soldier = this.parentElement.id;
+  console.log(soldier)
 }
 
 //set the data of the new group in the json
@@ -234,6 +238,10 @@ function AddGroup() {
   groups[parentgrp].subgroups.push(grpname);
   //alert(groups[grpname].name + groups[grpname].parentgroup);
   document.getElementById("add-group-div").style.display = "none";
+}
+
+function RemoveGroup(arg) {
+  // body...
 }
 
 //create the ui of the soldiers and groups
@@ -269,7 +277,11 @@ function CreateGroupDiv(parent, temp) {
   sldrbtn = document.createElement("button");
   sldrbtn.innerHTML = "חייל";
   sldrbtn.onclick = RevealAddSoldier;
+  delbtn = document.createElement("button");
+  delbtn.innerHTML = "del";
+  delbtn.onclick = RemoveGroup;
 
+  tempdiv.appendChild(delbtn);
   tempdiv.appendChild(grpbtn);
   tempdiv.appendChild(sldrbtn);
   tempdiv.appendChild(txt);
@@ -285,6 +297,7 @@ function CreateSoldierDiv(parent, temp) {
   tempdiv.setAttribute("class", "group-card");
   delbtn = document.createElement("button");
   delbtn.innerHTML = "del";
+  delbtn.onclick = RemoveSoldier;
   txt = document.createTextNode(temp);
   avail = document.createElement("input");
   avail.setAttribute("type", "checkbox");
