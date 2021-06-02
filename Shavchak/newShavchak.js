@@ -142,8 +142,10 @@ document.getElementById("add-group-div").style.display = "none";
 document.getElementById("add-soldier-div").style.display = "none";
 
 document.getElementById("add-soldier-bttn").onclick = AddSoldier;
+document.getElementById("add-new-soldier-bttn").onclick = CreateEditNewSoldier;
 document.getElementById("add-group-bttn").onclick = AddGroup;
 
+document.getElementById("reveal-new/edit-soldier").onclick = RevealAddNewSoldier;
 //toggle the ui div visability for everything below it
 function Checking() {
   parent = this.parentElement.id;
@@ -178,6 +180,16 @@ function RevealAddSoldier() {
   }
 }
 
+function RevealAddNewSoldier() {
+  if(document.getElementById("new/edit-soldier-div").style.display == "none"){
+    document.getElementById("new/edit-soldier-div").style.display = "block";
+    document.getElementById("new-soldier-name").value = "";
+  }
+  else{
+    document.getElementById("new/edit-soldier-div").style.display = "none";
+  }
+}
+
 //reveal the ui div which creates new group
 function RevealAddGroup() {
   lbl = document.getElementById("group-in-group");
@@ -198,21 +210,24 @@ function RevealAddGroup() {
   //lbl.setAttribute("for",group-in-group);
 }
 
-//set the data of the new/old soldier in the json of the groups not the soldiers json
-function AddSoldier() {
-  sldrname = document.getElementById("soldier-name").value;
-  // i want to separete the definning of soldiers vs them in the groups
-  // TODO create form for creating soldiera atrributes
-  /*radios = document.getElementsByName("pzm");
+function CreateEditNewSoldier() {
+  soldierName = document.getElementById("new-soldier-name").value;
+  radios = document.getElementsByName("pzm");
   for (i = 0; i < radios.length; i++) {
     if (radios[i].checked) {
       pzmof = radios[i].value;
     }
   }
-  soldiers[sldrname] = {
-    name: sldrname,
+  soldiers[soldierName] = {
+    name: soldierName,
     pzm: pzmof
-  };*/
+  };
+  document.getElementById("new-soldier-name").value = "";
+}
+
+//set the data of the new/old soldier in the json of the groups not the soldiers json
+function AddSoldier() {
+  sldrname = document.getElementById("soldier-name").value;
   parentgrp = document.getElementById("soldier-in-group").innerText;
   groups[parentgrp].soldiers.push(sldrname);
   //alert(soldiers[sldrname].name + soldiers[sldrname].pzm);
@@ -278,7 +293,7 @@ function CreateGroupDiv(parent, temp) {
   sldrbtn.innerHTML = "חייל";
   sldrbtn.onclick = RevealAddSoldier;
   delbtn = document.createElement("button");
-  delbtn.innerHTML = "del";
+  delbtn.innerHTML = "הסר";
   delbtn.onclick = RemoveGroup;
 
   tempdiv.appendChild(delbtn);
@@ -295,8 +310,11 @@ function CreateSoldierDiv(parent, temp) {
   tempdiv = document.createElement("div");
   tempdiv.setAttribute("id", temp);
   tempdiv.setAttribute("class", "group-card");
+  if (!soldiers.hasOwnProperty(temp)) {
+    tempdiv.style.backgroundColor = "red";
+  }
   delbtn = document.createElement("button");
-  delbtn.innerHTML = "del";
+  delbtn.innerHTML = "הסר";
   delbtn.onclick = RemoveSoldier;
   txt = document.createTextNode(temp);
   avail = document.createElement("input");

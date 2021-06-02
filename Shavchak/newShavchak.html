@@ -30,7 +30,7 @@
   <div id="create-nagla" style="display: none">
     <h3>נגלה חדשה</h3>
     <div id="stand-time-div">
-      <input type="date" id="nagla-date"/>
+      <input type="date" id="nagla-date" />
       <label>תאריך התחלת השמירה</label>
       <br />
       <input type="time" id="nagla-start-time" />
@@ -56,13 +56,12 @@
     </div>
     <hr />
     <div id="control-groups-div">
-      <div id="solela">
-      </div>
-      <div id="add-soldier-div">
-        <input type="text" id="soldier-name" />
+      <button id="reveal-new/edit-soldier">צור/ערוך חייל</button>
+      <div id="new/edit-soldier-div" style="display: none">
+        <input type="text" id="new-soldier-name"/>
         <label>שם החייל</label>
         <br />
-        <!--
+        <button id="add-new-soldier-bttn">עדכן חייל</button>
         <label>1</label>
         <input type="radio" name="pzm" value="1" checked />
         <input type="radio" name="pzm" value="2" />
@@ -74,7 +73,13 @@
         <label>7</label>
         <label>פזם</label>
         <br />
-        -->
+      </div>
+      <div id="solela">
+      </div>
+      <div id="add-soldier-div">
+        <input type="text" id="soldier-name"/>
+        <label>שם החייל</label>
+        <br />
         <label id="soldier-in-group"></label>
         <label>בקבוצה </label>
         <br />
