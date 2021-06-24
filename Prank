@@ -1,0 +1,12 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>`substitute(Filename('', 'Page Title'), '^.', '\u&', '')`</title>
+    
+</head>
+<body>
+    <h1>חוקי המשחק שכל האנשים המגניבים משחקים</h1>
+    צריך לפגוע בפינה השמאלית בלבד
+</body>
+</html>
